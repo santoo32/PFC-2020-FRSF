@@ -37,9 +37,9 @@ This repository was created for what will be the development of our final degree
 
 ## Contents
 
-#### 4 - Object Detection
-
-- **YOLOv3** ([notebook](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3)) ([code](https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master/4-Object_Detection/YOLOV3/core/yolov3.py))([paper](https://arxiv.org/pdf/1804.02767.pdf)). YOLOv3: An Incremental Improvement.🔥🔥🔥🔥
+#### Object Detection
+For the core of our aplication we used:
+- **YOLOv3** ([paper](https://arxiv.org/pdf/1804.02767.pdf)). YOLOv3: An Incremental Improvement.
 
 <p align="center">
     <img width="65%" src="https://user-images.githubusercontent.com/30433053/67914531-656bb080-fbcb-11e9-9775-302a25faf747.png" style="max-width:65%;">
