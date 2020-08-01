@@ -19,7 +19,7 @@ if gpus:
 from core.yolov3 import YOLOv3, decode
 
 
-video_path = "./docs/walk.mp4"
+video_path = "./data/videos/walk.mp4"
 
 # Number of classes, one class for each element
 num_classes     = 80
@@ -46,7 +46,8 @@ for i, fm in enumerate(feature_maps):
 model = tf.keras.Model(input_layer, bbox_tensors)
 
 # load weights from file
-utils.load_weights(model, "./yolov3.weights")
+utils.load_weights(model, "./data/weights/yolov3.weights")
+
 
 # Prints a string summary of the network.
 # model.summary()
