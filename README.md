@@ -2,15 +2,15 @@
 <p align="center">"<i>while(noSuccess){ tryAgain() }</i>" 
   ----- A t-shirt</p>
 <p align="center">
-  <a href="https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master">
+  <a href=https://github.com/santoo32/PFC-2020-FRSF/tree/master">
     <img src="https://img.shields.io/badge/Branch-master-green.svg?longCache=true"
         alt="Branch">
   </a>
-  <a href="https://github.com/YunYang1994/TensorFlow2.0-Examples/stargazers">
+  <a href="https://github.com/santoo32/PFC-2020-FRSF/stargazers">
     <img src="https://img.shields.io/github/stars/YunYang1994/TensorFlow2.0-Examples.svg?label=Stars&style=social"
         alt="Stars">
   </a>
-    <a href="https://github.com/YunYang1994/TensorFlow2.0-Examples/network/members">
+    <a href="https://github.com/santoo32/PFC-2020-FRSF/network/members">
     <img src="https://img.shields.io/github/forks/YunYang1994/TensorFlow2.0-Examples.svg?label=Forks&style=social"
         alt="Forks">
   </a>
@@ -20,13 +20,14 @@
         alt="Awesome">
   </a>
   </a>
-   <a href="https://github.com/YunYang1994/TensorFlow2.0-Examples/blob/master/LICENSE">
+   <a href="https://github.com/santoo32/PFC-2020-FRSF/blob/master/LICENSE">
    <img src="https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000"
         alt="Awesome">
 </p>
 <div align="center">
   <sub>Created by
-  <a href="https://github.com/YunYang1994">YunYang1994</a>
+  <a href="https://github.com/santoo32">santoo32</a>
+  <a href="https://github.com/farca9">farca9</a>
 </div>
 <br>
     
