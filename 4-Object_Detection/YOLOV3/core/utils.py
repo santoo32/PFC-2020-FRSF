@@ -1,21 +1,13 @@
-#! /usr/bin/env python
-# coding=utf-8
-#================================================================
-#   Copyright (C) 2019 * Ltd. All rights reserved.
-#
-#   Editor      : VIM
-#   File name   : utils.py
-#   Author      : YunYang1994
-#   Created date: 2019-07-12 01:33:38
-#   Description :
-#
-#================================================================
-
 import cv2
 import random
 import colorsys
 import numpy as np
 from core.config import cfg
+
+# Truncates a number to x given decimals
+def truncate(n, decimals=0):
+    multiplier = 10 ** decimals
+    return int(n * multiplier) / multiplier
 
 def load_weights(model, weights_file):
     """
@@ -59,7 +51,6 @@ def load_weights(model, weights_file):
     assert len(wf.read()) == 0, 'failed to read all data'
     wf.close()
 
-
 def read_class_names(class_file_name):
     '''loads class name from a file'''
     names = {}
@@ -68,14 +59,12 @@ def read_class_names(class_file_name):
             names[ID] = name.strip('\n')
     return names
 
-
 def get_anchors(anchors_path):
     '''loads the anchors from a file'''
     with open(anchors_path) as f:
         anchors = f.readline()
     anchors = np.array(anchors.split(','), dtype=np.float32)
     return anchors.reshape(3, 3, 2)
-
 
 def image_preporcess(image, target_size, gt_boxes=None):
 
@@ -107,6 +96,7 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
 
     num_classes = len(classes)
     image_h, image_w, _ = image.shape
+    
     hsv_tuples = [(1.0 * x / num_classes, 1., 1.) for x in range(num_classes)]
     colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
     colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
@@ -115,26 +105,32 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
     random.shuffle(colors)
     random.seed(None)
 
+    # Iterate over bounding boxes 
     for i, bbox in enumerate(bboxes):
         coor = np.array(bbox[:4], dtype=np.int32)
         fontScale = 0.5
+        # Confidence of the detection
         score = bbox[4]
+        # Detected class
         class_ind = int(bbox[5])
+        
         bbox_color = colors[class_ind]
         bbox_thick = int(0.6 * (image_h + image_w) / 600)
+        
         c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
+        
         cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
-
+        
+        print("Detected: ", classes[class_ind], " - Confidence: ", truncate(score, 3))
+        
         if show_label:
             bbox_mess = '%s: %.2f' % (classes[class_ind], score)
             t_size = cv2.getTextSize(bbox_mess, 0, fontScale, thickness=bbox_thick//2)[0]
             cv2.rectangle(image, c1, (c1[0] + t_size[0], c1[1] - t_size[1] - 3), bbox_color, -1)  # filled
-
             cv2.putText(image, bbox_mess, (c1[0], c1[1]-2), cv2.FONT_HERSHEY_SIMPLEX,
                         fontScale, (0, 0, 0), bbox_thick//2, lineType=cv2.LINE_AA)
 
     return image
-
 
 
 def bboxes_iou(boxes1, boxes2):
@@ -155,7 +151,8 @@ def bboxes_iou(boxes1, boxes2):
 
     return ious
 
-
+# Non Maximun Supression => WTF
+# https://towardsdatascience.com/non-maximum-suppression-nms-93ce178e177c
 def nms(bboxes, iou_threshold, sigma=0.3, method='nms'):
     """
     :param bboxes: (xmin, ymin, xmax, ymax, score, class)

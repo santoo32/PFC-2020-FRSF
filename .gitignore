@@ -16,3 +16,8 @@ bin-release/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+
+
+#Ignore videos and weights folders to make commits lighter
+4-Object_Detection/YOLOV3/data/videos
+4-Object_Detection/YOLOV3/data/weights
