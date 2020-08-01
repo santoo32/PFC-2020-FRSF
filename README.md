@@ -21,13 +21,15 @@
   </a>
   </a>
    <a href="https://github.com/santoo32/PFC-2020-FRSF/blob/master/LICENSE">
-   <img src="https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000"
-        alt="Awesome">
 </p>
 <div align="center">
   <sub>Created by
+                   <div>
   <a href="https://github.com/santoo32">santoo32</a>
+                                       </div>
+                                       <div>
   <a href="https://github.com/farca9">farca9</a>
+                                     </div>
 </div>
 <br>
     
