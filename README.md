@@ -1,6 +1,6 @@
-<h2 align="center"><code>🎉TensorFlow2.0-Examples🎉!</code></h2>
-<p align="center">"<i>Talk is cheap, show me the code.</i>" 
-  ----- Linus Torvalds</p>
+<h2 align="center"><code>🎉UTN - FRSF🎉!</code></h2>
+<p align="center">"<i>while(noSuccess){ tryAgain() }</i>" 
+  ----- A t-shirt</p>
 <p align="center">
   <a href="https://github.com/YunYang1994/TensorFlow2.0-Examples/tree/master">
     <img src="https://img.shields.io/badge/Branch-master-green.svg?longCache=true"
