@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 
-
+# Simple moving average python implementation
+# Input object should have the following structure
 product = {
     'time' : [1,2,3,4,5,6,7,8,9,10,11,12],
     'confidence':[290,260,288,0,0,0,0,0,0,0,0,0]
