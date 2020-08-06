@@ -17,6 +17,7 @@ bin-release/
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
 *.pyc
+*.ropeproject
 
 #Ignore videos and weights folders to make commits lighter
 4-Object_Detection/YOLOV3/data/videos
