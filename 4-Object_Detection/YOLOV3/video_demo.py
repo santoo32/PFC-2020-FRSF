@@ -1,6 +1,8 @@
 # OpenCV: Image processing
 import cv2
 import time
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
 # numpy: numerical computation
 import numpy as np
 import core.utils as utils
@@ -19,14 +21,14 @@ if gpus:
 from core.yolov3 import YOLOv3, decode
     
 
-def startDetection():
-    video_path = "./data/videos/walk.mp4"
+def startDetection(window, minConfidence, videoPath):
+    video_path = videoPath
 
     # Number of classes, one class for each element
     num_classes     = 80
     input_size      = 704
-    min_confidence = 0.7
-
+    min_confidence = minConfidence / 100
+    
     # Layer to be used as an entry point into a Network (a graph of layers).
     # Tuple with height, width and depth used to reshape arrays.
     # This is used for reshaping in Keras.
@@ -56,7 +58,8 @@ def startDetection():
     # Load video from file with openCV
     vid = cv2.VideoCapture(video_path)
 
-    while True:
+    runFlag = True
+    while runFlag:
         # Get a frame from the video
         # Returns a bool (True/False).
         # If frame is read correctly, it will be True. 
@@ -108,7 +111,7 @@ def startDetection():
         # (TO DO: see how it does it)
         image = utils.draw_bbox(frame, bboxes)
 
-        result = np.asarray(image)
+        result = np.asarray(image.image)
 
         # info = "time: %.2f ms" %(1000*exec_time)
         info = ""
@@ -123,12 +126,21 @@ def startDetection():
             thickness=1)
 
         cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
-        result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-
+        result = cv2.cvtColor(image.image, cv2.COLOR_RGB2BGR)
+        
+        print("Detected: ", image.classDetected)
+        
         cv2.imshow("result", result) 
-
+        # window.label_2.setPixmap(QtGui.QPixmap(Image.fromarray(result, 'RGB')))
+        if(image.classDetected == 'handgun'):
+            cv2.destroyAllWindows()
+            window.label_4.setText("Handgun detected")
+            return "Alert"
+            break
         # Breaks while loop on 'q' press
-        if cv2.waitKey(1) & 0xFF == ord('q'): break
+        if cv2.waitKey(1) & 0xFF == ord('q'): 
+            cv2.destroyAllWindows()
+            break
 
 
 

@@ -3,6 +3,8 @@ import random
 import colorsys
 import numpy as np
 from core.config import cfg
+# sys.path.append(".")
+from object_classes.ImageDetected import ImageDetected
 
 # Truncates a number to x given decimals
 def truncate(n, decimals=0):
@@ -121,7 +123,7 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
         
         cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
         
-        print("Detected: ", classes[class_ind], " - Confidence: ", truncate(score, 3))
+       
         
         if show_label:
             bbox_mess = '%s: %.2f' % (classes[class_ind], score)
@@ -129,8 +131,10 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
             cv2.rectangle(image, c1, (c1[0] + t_size[0], c1[1] - t_size[1] - 3), bbox_color, -1)  # filled
             cv2.putText(image, bbox_mess, (c1[0], c1[1]-2), cv2.FONT_HERSHEY_SIMPLEX,
                         fontScale, (0, 0, 0), bbox_thick//2, lineType=cv2.LINE_AA)
+        
+        resultDetection = ImageDetected(image, classes[class_ind])
 
-    return image
+    return resultDetection
 
 
 def bboxes_iou(boxes1, boxes2):
