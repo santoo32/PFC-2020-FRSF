@@ -15,7 +15,7 @@ class MyWindow(QMainWindow):
     # Start yolov3 detection
     def start(self):
         message = vd.startDetection(self, self.spinBox.value(), self.filePath.text())
-        print(message)
+        # print(message)
 
     def valuechange(self):
         print(self.spinBox.value())
@@ -126,7 +126,6 @@ class MyWindow(QMainWindow):
          with f:
             # Update input text field and label 
             self.filePath.setText(f.name)
-            self.label_4.setPixmap(QtGui.QPixmap(f.name))
 
     
 def window():

@@ -1,8 +1,12 @@
 # OpenCV: Image processing
 import cv2
 import time
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
+
 # numpy: numerical computation
 import numpy as np
 import core.utils as utils
@@ -125,13 +129,16 @@ def startDetection(window, minConfidence, videoPath):
             color=(255, 0, 0), 
             thickness=1)
 
-        cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
-        result = cv2.cvtColor(image.image, cv2.COLOR_RGB2BGR)
+        # cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
+        # result = cv2.cvtColor(image.image, cv2.COLOR_RGB2BGR)
         
-        print("Detected: ", image.classDetected)
+        # print("Detected: ", image.classDetected)
         
-        cv2.imshow("result", result) 
-        # window.label_2.setPixmap(QtGui.QPixmap(Image.fromarray(result, 'RGB')))
+        
+        window.imageDisplay.setPixmap(QtGui.QPixmap(convert_cv_qt(image.image)))
+        
+        # cv2.imshow("result", result) 
+
         if(image.classDetected == 'handgun'):
             cv2.destroyAllWindows()
             window.label_4.setText("Handgun detected")
@@ -142,7 +149,14 @@ def startDetection(window, minConfidence, videoPath):
             cv2.destroyAllWindows()
             break
 
-
+def convert_cv_qt(cv_img):
+    """Convert from an opencv image to QPixmap"""
+    rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+    h, w, ch = rgb_image.shape
+    bytes_per_line = ch * w
+    convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+    p = convert_to_Qt_format.scaled(661, 521, Qt.KeepAspectRatio)
+    return QPixmap.fromImage(p)
 
 
 
