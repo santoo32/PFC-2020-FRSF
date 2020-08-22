@@ -5,20 +5,24 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
 import video_demo as vd
+import popupWindow as detectionWindow
 
 
 class MyWindow(QMainWindow):
     def __init__(self):
         super(MyWindow,self).__init__()
+        self.dialogs = list()
         self.initUI()
     
+
     # Start yolov3 detection
     def start(self):
         message = vd.startDetection(self, self.spinBox.value(), self.filePath.text())
         # print(message)
 
+
     def valuechange(self):
-        print(self.spinBox.value())
+        print(" ")
 
     def initUI(self):
         # Main window
@@ -43,6 +47,17 @@ class MyWindow(QMainWindow):
         self.runButton.setIconSize(QtCore.QSize(20, 20))
         self.runButton.setFlat(False)
         self.runButton.setObjectName("runButton")
+        self.runButton.setStyleSheet("""color: #ffffff;
+                                        background-color: #006e0f;
+                                        border-width: 1px;
+                                        border-color: #1e1e1e;
+                                        border-style: solid;
+                                        border-radius: 6;
+                                        padding: 3px;
+                                        font-size: 12px;
+                                        padding-left: 5px;
+                                        padding-right: 5px;
+                                        min-width: 40px;""")
         self.runButton.clicked.connect(self.start)
         
         # Separator line
@@ -89,29 +104,6 @@ class MyWindow(QMainWindow):
         self.label_5.setText("Video file")
         self.imageDisplay.setText("")
 
-        
-        # Custom color palete, currently unused
-
-        # dark_palette = QtGui.QPalette()
-
-        # dark_palette.setColor(QPalette.Window, QColor(235, 235, 235))
-        # dark_palette.setColor(QPalette.WindowText, QColor(235, 235, 235))
-        # dark_palette.setColor(QPalette.Base, QColor(25, 25, 25))
-        # dark_palette.setColor(QPalette.AlternateBase, QColor(53, 53, 53))
-        # dark_palette.setColor(QPalette.ToolTipBase, QColor('white'))
-        # dark_palette.setColor(QPalette.ToolTipText, QColor('white'))
-        # dark_palette.setColor(QPalette.Text, QColor(255, 255, 255))
-        # dark_palette.setColor(QPalette.Button, QColor(53, 53, 53))
-        # dark_palette.setColor(QPalette.ButtonText, QColor('white'))
-        # dark_palette.setColor(QPalette.BrightText, QColor('red'))
-        # dark_palette.setColor(QPalette.Link, QColor(42, 130, 218))
-        # dark_palette.setColor(QPalette.Highlight, QColor(42, 130, 218))
-        # dark_palette.setColor(QPalette.HighlightedText, QColor('black'))
-
-        # self.setPalette(dark_palette)
-
-        # self.setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }")
-
     # Get files from a path
     def getfiles(self):
       dlg = QFileDialog(self)
@@ -127,7 +119,11 @@ class MyWindow(QMainWindow):
             # Update input text field and label 
             self.filePath.setText(f.name)
 
-    
+    def button_clicked(self):
+        dialog = detectionWindow.DetectionWindow(self)
+        self.dialogs.append(dialog)
+        dialog.show()
+
 def window():
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
