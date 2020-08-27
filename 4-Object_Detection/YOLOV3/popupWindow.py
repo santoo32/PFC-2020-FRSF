@@ -4,12 +4,20 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
+import core.utils as utils
+
 
 
 class DetectionWindow(QMainWindow):
+
     def __init__(self, parent=None):
         super(DetectionWindow,self).__init__(parent)
+        self.image = QtGui.QPixmap()
         self.initUI()
+    
+    def setImage(self, image):
+        self.image = utils.convert_cv_qt(image)
+        self.imageLabel.setPixmap(QtGui.QPixmap(self.image))
 
     def initUI(self):
         # Dialog.setObjectName("Dialog")
@@ -28,6 +36,8 @@ class DetectionWindow(QMainWindow):
         self.imageLabel = QtWidgets.QLabel(self)
         self.imageLabel.setGeometry(QtCore.QRect(10, 100, 741, 371))
         self.imageLabel.setObjectName("imageLabel")
+        
+
         self.label_2 = QtWidgets.QLabel(self)
         self.label_2.setGeometry(QtCore.QRect(190, 40, 396, 41))
         font = QtGui.QFont()
@@ -44,7 +54,6 @@ class DetectionWindow(QMainWindow):
 
         self.setWindowTitle("Warning")
         self.label.setText("Alerta")
-        self.imageLabel.setText("TextLabel")
         self.label_2.setText("Por favor indique si en la siguiente imagen hay un arma")
         self.yesButton.setText("SI")
         self.noButton.setText("NO")

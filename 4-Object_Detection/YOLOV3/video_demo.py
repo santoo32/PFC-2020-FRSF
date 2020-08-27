@@ -1,7 +1,7 @@
 # OpenCV: Image processing
 import cv2
 import time
-
+import popupWindow as detectionWindow
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
 from PyQt5.QtGui import QPixmap
@@ -135,28 +135,25 @@ def startDetection(window, minConfidence, videoPath):
         # print("Detected: ", image.classDetected)
         
         
-        window.imageDisplay.setPixmap(QtGui.QPixmap(convert_cv_qt(image.image)))
+        window.imageDisplay.setPixmap(QtGui.QPixmap(utils.convert_cv_qt(image.image)))
         
         # cv2.imshow("result", result) 
 
-        if(image.classDetected == 'handgun'):
-            cv2.destroyAllWindows()
-            window.label_4.setText("Handgun detected")
-            return "Alert"
-            break
+        if(image.classDetected == 'giraffe'):
+            #cv2.destroyAllWindows()
+            #window.label_4.setText("Handgun detected")
+            #return "Alert"
+            #break
+            callPopUpWindow(window, image.image)
+
         # Breaks while loop on 'q' press
         if cv2.waitKey(1) & 0xFF == ord('q'): 
             cv2.destroyAllWindows()
             break
 
-def convert_cv_qt(cv_img):
-    """Convert from an opencv image to QPixmap"""
-    rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
-    h, w, ch = rgb_image.shape
-    bytes_per_line = ch * w
-    convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
-    p = convert_to_Qt_format.scaled(661, 521, Qt.KeepAspectRatio)
-    return QPixmap.fromImage(p)
 
-
-
+def callPopUpWindow(self, detection):
+        dialog = detectionWindow.DetectionWindow(self)
+        dialog.setImage(detection)
+        #self.dialogs.append(dialog)
+        dialog.show()
