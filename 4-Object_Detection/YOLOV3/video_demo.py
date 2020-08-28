@@ -69,15 +69,7 @@ def startDetection(window, minConfidence, videoPath):
         # If frame is read correctly, it will be True. 
         # So you can check end of the video by checking this return value.
         return_value, frame = vid.read()
-        if return_value:
-            # cv2.cvtColor() method is used to convert an image from one color space to another.
-            # RGB stands for Red Green Blue. Most often, an RGB color is stored in a structure or unsigned integer with Blue occupying the least significant "area" (a byte in 32-bit and 24-bit formats), 
-            #   Green the second least, 
-            #   and Red the third least.
-            # BGR is the same, except the order of areas is reversed. Red occupies the least significant area, Green the second (still), and Blue the third.
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        else:
-            # Video ended
+        if not return_value:
             raise ValueError("No image!")
 
         # thistuple = ("apple", "banana", "cherry", "orange", "kiwi", "melon", "mango")
