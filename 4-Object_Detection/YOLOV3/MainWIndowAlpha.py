@@ -6,6 +6,7 @@ from PyQt5.QtGui import *
 import sys
 import video_demo as vd
 import popupWindow as detectionWindow
+import cv2
 
 
 class MyWindow(QMainWindow):
@@ -14,15 +15,30 @@ class MyWindow(QMainWindow):
         self.dialogs = list()
         self.initUI()
     
-
     # Start yolov3 detection
     def start(self):
-        message = vd.startDetection(self, self.spinBox.value(), self.filePath.text())
-        # print(message)
+        if self.runButton.text() == "Run":
+            self.runButton.setText("Stop")
+            self.runButton.setStyleSheet("""color: #000000;
+                                        background-color: #d4d4d4;
+                                        border-width: 1px;
+                                        border-color: #1e1e1e;
+                                        border-style: solid;
+                                        border-radius: 6;
+                                        padding: 3px;
+                                        font-size: 12px;
+                                        padding-left: 5px;
+                                        padding-right: 5px;
+                                        min-width: 40px;""")
+            message = vd.startDetection(self, self.spinBox.value(), self.filePath.text())
+        else:
+            print("Stop")
+            # clear everything
+            cv2.destroyAllWindows()
 
 
-    def valuechange(self):
-        print(" ")
+    # def valuechange(self):
+    #     print(" ")
 
     def initUI(self):
         # Main window
@@ -76,7 +92,7 @@ class MyWindow(QMainWindow):
         self.spinBox.setGeometry(QtCore.QRect(720, 250, 42, 22))
         self.spinBox.setMinimum(1)
         self.spinBox.setObjectName("spinBox")
-        self.spinBox.valueChanged.connect(self.valuechange)
+        # self.spinBox.valueChanged.connect(self.valuechange)
         
         # Big main label to display an image
         self.imageDisplay = QtWidgets.QLabel(self)

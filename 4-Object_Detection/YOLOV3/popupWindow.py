@@ -48,15 +48,27 @@ class DetectionWindow(QMainWindow):
         self.yesButton.setGeometry(QtCore.QRect(220, 510, 321, 31))
         self.yesButton.setObjectName("yesButton")
         self.yesButton.setStyleSheet("background-color : red") 
+        self.yesButton.clicked.connect(self.prompAlarm)
+
         self.noButton = QtWidgets.QPushButton(self)
         self.noButton.setGeometry(QtCore.QRect(340, 550, 75, 23))
         self.noButton.setObjectName("noButton")
+        self.noButton.clicked.connect(self.closeWindow)
 
         self.setWindowTitle("Warning")
         self.label.setText("Alerta")
         self.label_2.setText("Por favor indique si en la siguiente imagen hay un arma")
         self.yesButton.setText("SI")
         self.noButton.setText("NO")
+
+    def prompAlarm(self):
+        print("Alarm")
+        self.close()
+    
+    
+    def closeWindow(self):
+        self.close()
+
 
 def detectionWindow():
     app = QApplication(sys.argv)
