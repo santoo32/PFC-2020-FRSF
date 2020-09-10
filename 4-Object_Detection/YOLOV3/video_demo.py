@@ -53,7 +53,7 @@ def startDetection(window, minConfidence, videoPath):
     model = tf.keras.Model(input_layer, bbox_tensors)
 
     # load weights from file
-    utils.load_weights(model, "./data/weights/yolov3.weights")
+    utils.load_weights(model, "./data/weights/handgun.weights")
 
 
     # Prints a string summary of the network.
@@ -84,13 +84,8 @@ def startDetection(window, minConfidence, videoPath):
 
         image_data = image_data[np.newaxis, ...].astype(np.float32)
 
-        # prev_time and curr_time are used for ms display
-        # prev_time = time.time()
         # Performs the prediction on the frame (TO DO: see how it does it)
         pred_bbox = model.predict_on_batch(image_data)
-        # curr_time = time.time()
-        # exec_time = curr_time - prev_time
-
 
         # Changes tensor shape, similar to transposing a matrix
         # href: https://www.tensorflow.org/api_docs/python/tf/reshape
@@ -106,31 +101,10 @@ def startDetection(window, minConfidence, videoPath):
         # Draws boundingbox in image
         # (TO DO: see how it does it)
         image = utils.draw_bbox(frame, bboxes)
-
-        result = np.asarray(image.image)
-
-        # info = "time: %.2f ms" %(1000*exec_time)
-        info = ""
-
-        cv2.putText(
-            result, 
-            text=info, 
-            org=(50, 70), 
-            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-            fontScale=1, 
-            color=(255, 0, 0), 
-            thickness=1)
-
-        # cv2.namedWindow("result", cv2.WINDOW_AUTOSIZE)
-        # result = cv2.cvtColor(image.image, cv2.COLOR_RGB2BGR)
-        
-        # print("Detected: ", image.classDetected)
-        
-        
+    
         window.imageDisplay.setPixmap(QtGui.QPixmap(utils.convert_cv_qt(image.image)))
         
-        # cv2.imshow("result", result) 
-
+        # HERE check if detected class is handgun
         if(image.classDetected == 'giraffe'):
             #cv2.destroyAllWindows()
             #window.label_4.setText("Handgun detected")
@@ -147,5 +121,4 @@ def startDetection(window, minConfidence, videoPath):
 def callPopUpWindow(self, detection):
         dialog = detectionWindow.DetectionWindow(self)
         dialog.setImage(detection)
-        #self.dialogs.append(dialog)
         dialog.show()

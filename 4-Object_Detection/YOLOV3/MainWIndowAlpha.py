@@ -34,29 +34,25 @@ class MyWindow(QMainWindow):
         else:
             print("Stop")
             # clear everything
-            cv2.destroyAllWindows()
 
-
-    # def valuechange(self):
-    #     print(" ")
 
     def initUI(self):
         # Main window
-        self.resize(926, 600)
+        self.resize(1471, 877)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("img_34913.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setWindowIcon(icon)
         
         # Main window title
         self.title = QtWidgets.QLabel(self)
-        self.title.setGeometry(QtCore.QRect(350, 0, 141, 51))
+        self.title.setGeometry(QtCore.QRect(650, 10, 141, 51))
         self.title.setTabletTracking(False)
         self.title.setWordWrap(True)
         self.title.setObjectName("label")
         
         # Start detection button
         self.runButton = QtWidgets.QPushButton(self)
-        self.runButton.setGeometry(QtCore.QRect(750, 550, 121, 41))
+        self.runButton.setGeometry(QtCore.QRect(1310, 820, 121, 41))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("../Downloads/identidad.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.runButton.setIcon(icon1)
@@ -78,43 +74,43 @@ class MyWindow(QMainWindow):
         
         # Separator line
         self.line = QtWidgets.QFrame(self)
-        self.line.setGeometry(QtCore.QRect(700, 30, 21, 561))
+        self.line.setGeometry(QtCore.QRect(1240, 20, 21, 841))
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
         
         # Spinner box title
         self.label_2 = QtWidgets.QLabel(self)
-        self.label_2.setGeometry(QtCore.QRect(720, 230, 81, 16))
+        self.label_2.setGeometry(QtCore.QRect(1260, 240, 81, 16))
         self.label_2.setObjectName("label_2")
         # Confidence spinbox
         self.spinBox = QtWidgets.QSpinBox(self)
-        self.spinBox.setGeometry(QtCore.QRect(720, 250, 42, 22))
+        self.spinBox.setGeometry(QtCore.QRect(1260, 260, 42, 22))
         self.spinBox.setMinimum(1)
         self.spinBox.setObjectName("spinBox")
         # self.spinBox.valueChanged.connect(self.valuechange)
         
         # Big main label to display an image
         self.imageDisplay = QtWidgets.QLabel(self)
-        self.imageDisplay.setGeometry(QtCore.QRect(10, 60, 661, 521))
+        self.imageDisplay.setGeometry(QtCore.QRect(10, 60, 1221, 801))
         self.imageDisplay.setObjectName("label_4")
 
         #Video file input
         self.label_5 = QtWidgets.QLabel(self)
-        self.label_5.setGeometry(QtCore.QRect(720, 100, 81, 16))
+        self.label_5.setGeometry(QtCore.QRect(1260, 130, 81, 16))
         self.label_5.setObjectName("label_5")
         self.filePath = QtWidgets.QLineEdit(self)
-        self.filePath.setGeometry(QtCore.QRect(720, 120, 131, 20))
+        self.filePath.setGeometry(QtCore.QRect(1260, 150, 131, 20))
         self.filePath.setObjectName("lineEdit")
         self.examineButton = QtWidgets.QPushButton(self)
-        self.examineButton.setGeometry(QtCore.QRect(860, 120, 61, 20))
+        self.examineButton.setGeometry(QtCore.QRect(1400, 150, 61, 20))
         self.examineButton.setObjectName("pushButton")
         self.examineButton.setText("Examine")
         self.examineButton.clicked.connect(self.getfiles)
 
         # Values initialization
         self.setWindowTitle("Orwell surveillance")
-        self.title.setText("PFC - 2020 - V0.2")
+        self.title.setText("PFC - 2020 - V0.4")
         self.runButton.setText("Run")
         self.label_2.setText("Confidence")
         self.label_5.setText("Video file")

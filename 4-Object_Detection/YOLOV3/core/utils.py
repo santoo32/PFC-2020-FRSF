@@ -95,6 +95,7 @@ def image_preporcess(image, target_size, gt_boxes=None):
         return image_paded, gt_boxes
 
 
+
 def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_label=True):
     """
     bboxes: [x_min, y_min, x_max, y_max, probability, cls_id] format coordinates.
@@ -111,8 +112,8 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
     random.shuffle(colors)
     random.seed(None)
 
-
-    global resultDetection
+    # Initialiced to avoid errors
+    resultDetection = ImageDetected(image, classes[0])
     
     # Iterate over bounding boxes 
     for i, bbox in enumerate(bboxes):
@@ -122,7 +123,7 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
         score = bbox[4]
         # Detected class
         class_ind = int(bbox[5])
-        
+
         bbox_color = colors[class_ind]
         bbox_thick = int(0.6 * (image_h + image_w) / 600)
         
@@ -250,7 +251,7 @@ def convert_cv_qt(cv_img):
     h, w, ch = rgb_image.shape
     bytes_per_line = ch * w
     convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
-    p = convert_to_Qt_format.scaled(661, 521, Qt.KeepAspectRatio)
+    p = convert_to_Qt_format.scaled(1221, 801, Qt.KeepAspectRatio)
     return QPixmap.fromImage(p)
 
 
