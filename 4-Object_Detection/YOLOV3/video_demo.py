@@ -26,6 +26,7 @@ from core.yolov3 import YOLOv3, decode
     
 
 def startDetection(window, minConfidence, videoPath):
+    popUpFlag = False
     video_path = videoPath
 
     # Number of classes, one class for each element
@@ -105,12 +106,15 @@ def startDetection(window, minConfidence, videoPath):
         window.imageDisplay.setPixmap(QtGui.QPixmap(utils.convert_cv_qt(image.image)))
         
         # HERE check if detected class is handgun
-        if(image.classDetected == 'giraffe'):
+        if(image.classDetected == 'handgun'):
             #cv2.destroyAllWindows()
             #window.label_4.setText("Handgun detected")
             #return "Alert"
             #break
-            callPopUpWindow(window, image.image)
+            if (popUpFlag == False):
+                popUpFlag = True
+                callPopUpWindow(window, image.image)
+               
 
         # Breaks while loop on 'q' press
         if cv2.waitKey(1) & 0xFF == ord('q'): 

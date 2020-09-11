@@ -21,10 +21,10 @@ class DetectionWindow(QMainWindow):
 
     def initUI(self):
         # Dialog.setObjectName("Dialog")
-        self.resize(755, 585)
+        self.resize(1043, 725)
         # self.setModal(True)
         self.label = QtWidgets.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(330, 10, 81, 33))
+        self.label.setGeometry(QtCore.QRect(500, 10, 81, 33))
        
         font = QtGui.QFont()
         font.setPointSize(20)
@@ -34,24 +34,24 @@ class DetectionWindow(QMainWindow):
         self.label.setObjectName("label")
         self.label.setStyleSheet("color : red")
         self.imageLabel = QtWidgets.QLabel(self)
-        self.imageLabel.setGeometry(QtCore.QRect(10, 100, 741, 371))
+        self.imageLabel.setGeometry(QtCore.QRect(10, 100, 1031, 541))
         self.imageLabel.setObjectName("imageLabel")
         
 
         self.label_2 = QtWidgets.QLabel(self)
-        self.label_2.setGeometry(QtCore.QRect(190, 40, 396, 41))
+        self.label_2.setGeometry(QtCore.QRect(340, 40, 396, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.yesButton = QtWidgets.QPushButton(self)
-        self.yesButton.setGeometry(QtCore.QRect(220, 510, 321, 31))
+        self.yesButton.setGeometry(QtCore.QRect(360, 650, 321, 31))
         self.yesButton.setObjectName("yesButton")
         self.yesButton.setStyleSheet("background-color : red") 
         self.yesButton.clicked.connect(self.prompAlarm)
 
         self.noButton = QtWidgets.QPushButton(self)
-        self.noButton.setGeometry(QtCore.QRect(340, 550, 75, 23))
+        self.noButton.setGeometry(QtCore.QRect(480, 700, 75, 23))
         self.noButton.setObjectName("noButton")
         self.noButton.clicked.connect(self.closeWindow)
 

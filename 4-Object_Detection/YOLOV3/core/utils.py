@@ -113,7 +113,7 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
     random.seed(None)
 
     # Initialiced to avoid errors
-    resultDetection = ImageDetected(image, classes[0])
+    resultDetection = ImageDetected(image, "")
     
     # Iterate over bounding boxes 
     for i, bbox in enumerate(bboxes):

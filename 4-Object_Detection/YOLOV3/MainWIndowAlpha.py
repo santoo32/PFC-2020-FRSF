@@ -32,8 +32,9 @@ class MyWindow(QMainWindow):
                                         min-width: 40px;""")
             message = vd.startDetection(self, self.spinBox.value(), self.filePath.text())
         else:
-            print("Stop")
-            # clear everything
+            # System exit on stop pressing because I dont know how to reinitialize all the variables
+            sys.exit()
+           
 
 
     def initUI(self):
