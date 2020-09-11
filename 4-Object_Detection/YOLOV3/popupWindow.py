@@ -5,10 +5,11 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
 import core.utils as utils
+import datetime
 
 
 
-class DetectionWindow(QMainWindow):
+class DetectionWindow(QtWidgets.QDialog):
 
     def __init__(self, parent=None):
         super(DetectionWindow,self).__init__(parent)
@@ -24,7 +25,7 @@ class DetectionWindow(QMainWindow):
         self.resize(1043, 725)
         # self.setModal(True)
         self.label = QtWidgets.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(500, 10, 81, 33))
+        self.label.setGeometry(QtCore.QRect(500, 10, 100, 33))
        
         font = QtGui.QFont()
         font.setPointSize(20)
@@ -63,11 +64,16 @@ class DetectionWindow(QMainWindow):
 
     def prompAlarm(self):
         print("Alarm")
-        self.close()
+        filename = "Alarm-" + datetime.datetime.now().strftime("%m-%d-%Y-%H%M%S") +".png"
+        print("Saved: " + filename)
+        self.image.save(filename)
+        self.returnValue = "Alarm"
+        super().accept() # <-- call parent method
     
     
     def closeWindow(self):
-        self.close()
+        self.returnValue = False
+        super().accept() # <-- call parent method
 
 
 def detectionWindow():

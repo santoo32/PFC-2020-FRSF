@@ -40,23 +40,25 @@ class MyWindow(QMainWindow):
     def initUI(self):
         # Main window
         self.resize(1471, 877)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("img_34913.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.setWindowIcon(icon)
         
         # Main window title
+        
+        font = QtGui.QFont()
+        font.setFamily("Calibri")
+        font.setPointSize(15)
+        font.setBold(True)
+        font.setWeight(75)
+        font.setKerning(False)
         self.title = QtWidgets.QLabel(self)
-        self.title.setGeometry(QtCore.QRect(650, 10, 141, 51))
+        self.title.setFont(font)
+        self.title.setGeometry(QtCore.QRect(500, 10, 600, 100))
         self.title.setTabletTracking(False)
         self.title.setWordWrap(True)
         self.title.setObjectName("label")
-        
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
         # Start detection button
         self.runButton = QtWidgets.QPushButton(self)
         self.runButton.setGeometry(QtCore.QRect(1310, 820, 121, 41))
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("../Downloads/identidad.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.runButton.setIcon(icon1)
         self.runButton.setIconSize(QtCore.QSize(20, 20))
         self.runButton.setFlat(False)
         self.runButton.setObjectName("runButton")
@@ -111,7 +113,7 @@ class MyWindow(QMainWindow):
 
         # Values initialization
         self.setWindowTitle("Orwell surveillance")
-        self.title.setText("PFC - 2020 - V0.4")
+        self.title.setText("PFC - 2020 - V1.0")
         self.runButton.setText("Run")
         self.label_2.setText("Confidence")
         self.label_5.setText("Video file")

@@ -2,7 +2,7 @@
 import cv2
 import time
 import popupWindow as detectionWindow
-from PyQt5 import QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
@@ -107,14 +107,17 @@ def startDetection(window, minConfidence, videoPath):
         
         # HERE check if detected class is handgun
         if(image.classDetected == 'handgun'):
-            #cv2.destroyAllWindows()
-            #window.label_4.setText("Handgun detected")
-            #return "Alert"
-            #break
             if (popUpFlag == False):
                 popUpFlag = True
-                callPopUpWindow(window, image.image)
-               
+                popUpFlag = callPopUpWindow(window, image.image)
+                if popUpFlag == "Alarm":
+                    popUpFlag = True
+                    window.title.setText("Alarm triggered - Detection saved to PC")
+                    window.title.setStyleSheet("color : red")
+                    # window.title.setPointSize(25)
+                    window.setStyleSheet("""QMainWindow{border: 6px solid red;}""")
+
+
 
         # Breaks while loop on 'q' press
         if cv2.waitKey(1) & 0xFF == ord('q'): 
@@ -126,3 +129,5 @@ def callPopUpWindow(self, detection):
         dialog = detectionWindow.DetectionWindow(self)
         dialog.setImage(detection)
         dialog.show()
+        if dialog.exec_() == QtWidgets.QDialog.Accepted:
+            return dialog.returnValue
