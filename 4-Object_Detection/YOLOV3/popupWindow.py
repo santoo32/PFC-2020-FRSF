@@ -6,7 +6,7 @@ from PyQt5.QtGui import *
 import sys
 import core.utils as utils
 import datetime
-
+import sma as sma
 
 
 class DetectionWindow(QtWidgets.QDialog):
@@ -72,6 +72,7 @@ class DetectionWindow(QtWidgets.QDialog):
     
     
     def closeWindow(self):
+        sma.clear_sma()
         self.returnValue = False
         super().accept() # <-- call parent method
 

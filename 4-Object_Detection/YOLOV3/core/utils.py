@@ -2,14 +2,13 @@ import cv2
 import random
 import colorsys
 import numpy as np
+import sma as sma
 from core.config import cfg
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
-# sys.path.append(".")
 from object_classes.ImageDetected import ImageDetected
-import pandas as pd
 
 # Truncates a number to x given decimals
 def truncate(n, decimals=0):
@@ -95,13 +94,6 @@ def image_preporcess(image, target_size, gt_boxes=None):
         gt_boxes[:, [1, 3]] = gt_boxes[:, [1, 3]] * scale + dh
         return image_paded, gt_boxes
 
-product = {
-    'time' : [],
-    'confidence':[]
-}
-
-dictIndex = 0
-
 def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_label=True):
     """
     bboxes: [x_min, y_min, x_max, y_max, probability, cls_id] format coordinates.
@@ -119,7 +111,7 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
     random.seed(None)
 
     # Initialiced to avoid errors
-    resultDetection = ImageDetected(image, "")
+    resultDetection = ImageDetected(image, "", 0)
     
     # Iterate over bounding boxes 
     for i, bbox in enumerate(bboxes):
@@ -129,28 +121,16 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
         score = bbox[4]
         # Detected class
         class_ind = int(bbox[5])
-        
-        
-        global dictIndex
-        product['time'].append(dictIndex)
-        product['confidence'].append(score)
-        dictIndex = dictIndex + 1
-        df = pd.DataFrame(product)
-        # Prints the table 
-        for i in range(0,df.shape[0]-9):
-            # df.loc[df.index[i+2],'SMA_3'] = np.round(((df.iloc[i,1]+ df.iloc[i+1,1] +df.iloc[i+2,1])/3),1)
-            df.loc[df.index[i+9],'SMA_10'] = np.round(((df.iloc[i,1]+ df.iloc[i+1,1] +df.iloc[i+2,1]+df.iloc[i+3,1]+df.iloc[i+4,1]+df.iloc[i+5,1]+df.iloc[i+6,1]+df.iloc[i+7,1]+df.iloc[i+8,1]+df.iloc[i+9,1])/10),1)
-
-        print(df)
 
         bbox_color = colors[class_ind]
         bbox_thick = int(0.6 * (image_h + image_w) / 600)
         
         c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
         
+        # Sets sma for detection validation
+        calculatedSma = sma.calculate_sma(score)
+        print("Calculated", calculatedSma)
         cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
-        
-       
         
         if show_label:
             bbox_mess = '%s: %.2f' % (classes[class_ind], score)
@@ -159,7 +139,7 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
             cv2.putText(image, bbox_mess, (c1[0], c1[1]-2), cv2.FONT_HERSHEY_SIMPLEX,
                         fontScale, (0, 0, 0), bbox_thick//2, lineType=cv2.LINE_AA)
         
-        resultDetection = ImageDetected(image, classes[class_ind])
+        resultDetection = ImageDetected(image, classes[class_ind], calculatedSma)
 
     return resultDetection
 
