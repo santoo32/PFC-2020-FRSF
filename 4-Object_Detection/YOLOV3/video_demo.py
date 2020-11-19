@@ -107,7 +107,7 @@ def startDetection(window, minConfidence, videoPath):
         window.imageDisplay.setPixmap(QtGui.QPixmap(utils.convert_cv_qt(image.image)))
         
         # HERE check if detected class is handgun
-        if(image.classDetected == 'handgun' and image.calculatedSma == 1):
+        if(image.classDetected == 'handgun' and image.calculatedSma >= 0.95):
             if (popUpFlag == False):
                 popUpFlag = True
                 popUpFlag = callPopUpWindow(window, image.image)
