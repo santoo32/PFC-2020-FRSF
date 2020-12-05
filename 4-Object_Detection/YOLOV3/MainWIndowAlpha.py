@@ -84,13 +84,15 @@ class MyWindow(QMainWindow):
         
         # Spinner box title
         self.label_2 = QtWidgets.QLabel(self)
-        self.label_2.setGeometry(QtCore.QRect(1260, 240, 81, 16))
+        self.label_2.setGeometry(QtCore.QRect(1260, 240, 90, 16))
         self.label_2.setObjectName("label_2")
         # Confidence spinbox
         self.spinBox = QtWidgets.QSpinBox(self)
         self.spinBox.setGeometry(QtCore.QRect(1260, 260, 42, 22))
         self.spinBox.setMinimum(1)
         self.spinBox.setObjectName("spinBox")
+        # Sets default value 
+        self.spinBox.setValue(80)
         # self.spinBox.valueChanged.connect(self.valuechange)
         
         # Big main label to display an image
@@ -115,7 +117,7 @@ class MyWindow(QMainWindow):
         self.setWindowTitle("Neural Network surveillance")
         self.title.setText("PFC - 2020 - V1.1.1")
         self.runButton.setText("Run")
-        self.label_2.setText("Confidence")
+        self.label_2.setText("Confidence  (1-99)")
         self.label_5.setText("Video file")
         self.imageDisplay.setText("")
 
