@@ -2,7 +2,13 @@ import cv2
 import random
 import colorsys
 import numpy as np
+import sma as sma
 from core.config import cfg
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
+from object_classes.ImageDetected import ImageDetected
 
 # Truncates a number to x given decimals
 def truncate(n, decimals=0):
@@ -88,7 +94,6 @@ def image_preporcess(image, target_size, gt_boxes=None):
         gt_boxes[:, [1, 3]] = gt_boxes[:, [1, 3]] * scale + dh
         return image_paded, gt_boxes
 
-
 def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_label=True):
     """
     bboxes: [x_min, y_min, x_max, y_max, probability, cls_id] format coordinates.
@@ -105,6 +110,9 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
     random.shuffle(colors)
     random.seed(None)
 
+    # Initialiced to avoid errors
+    resultDetection = ImageDetected(image, "", 0)
+    
     # Iterate over bounding boxes 
     for i, bbox in enumerate(bboxes):
         coor = np.array(bbox[:4], dtype=np.int32)
@@ -113,15 +121,16 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
         score = bbox[4]
         # Detected class
         class_ind = int(bbox[5])
-        
+
         bbox_color = colors[class_ind]
         bbox_thick = int(0.6 * (image_h + image_w) / 600)
         
         c1, c2 = (coor[0], coor[1]), (coor[2], coor[3])
         
+        # Sets sma for detection validation
+        calculatedSma = sma.calculate_sma(score)
+        print("Calculated", calculatedSma)
         cv2.rectangle(image, c1, c2, bbox_color, bbox_thick)
-        
-        print("Detected: ", classes[class_ind], " - Confidence: ", truncate(score, 3))
         
         if show_label:
             bbox_mess = '%s: %.2f' % (classes[class_ind], score)
@@ -129,8 +138,10 @@ def draw_bbox(image, bboxes, classes=read_class_names(cfg.YOLO.CLASSES), show_la
             cv2.rectangle(image, c1, (c1[0] + t_size[0], c1[1] - t_size[1] - 3), bbox_color, -1)  # filled
             cv2.putText(image, bbox_mess, (c1[0], c1[1]-2), cv2.FONT_HERSHEY_SIMPLEX,
                         fontScale, (0, 0, 0), bbox_thick//2, lineType=cv2.LINE_AA)
+        
+        resultDetection = ImageDetected(image, classes[class_ind], calculatedSma)
 
-    return image
+    return resultDetection
 
 
 def bboxes_iou(boxes1, boxes2):
@@ -232,6 +243,14 @@ def postprocess_boxes(pred_bbox, org_img_shape, input_size, score_threshold):
 
     return np.concatenate([coors, scores[:, np.newaxis], classes[:, np.newaxis]], axis=-1)
 
-
+def convert_cv_qt(cv_img):
+    
+    """Convert from an opencv image to QPixmap"""
+    rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+    h, w, ch = rgb_image.shape
+    bytes_per_line = ch * w
+    convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+    p = convert_to_Qt_format.scaled(1221, 801, Qt.KeepAspectRatio)
+    return QPixmap.fromImage(p)
 
 
