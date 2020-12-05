@@ -40,7 +40,7 @@ class DetectionWindow(QtWidgets.QDialog):
         
 
         self.label_2 = QtWidgets.QLabel(self)
-        self.label_2.setGeometry(QtCore.QRect(340, 40, 396, 41))
+        self.label_2.setGeometry(QtCore.QRect(340, 40, 420, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.label_2.setFont(font)

@@ -51,7 +51,7 @@ class MyWindow(QMainWindow):
         font.setKerning(False)
         self.title = QtWidgets.QLabel(self)
         self.title.setFont(font)
-        self.title.setGeometry(QtCore.QRect(500, 10, 600, 100))
+        self.title.setGeometry(QtCore.QRect(450, 10, 600, 100))
         self.title.setTabletTracking(False)
         self.title.setWordWrap(True)
         self.title.setObjectName("label")
