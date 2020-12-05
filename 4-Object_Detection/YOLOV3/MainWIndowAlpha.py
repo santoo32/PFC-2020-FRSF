@@ -112,8 +112,8 @@ class MyWindow(QMainWindow):
         self.examineButton.clicked.connect(self.getfiles)
 
         # Values initialization
-        self.setWindowTitle("Orwell surveillance")
-        self.title.setText("PFC - 2020 - V1.0")
+        self.setWindowTitle("Neural Network surveillance")
+        self.title.setText("PFC - 2020 - V1.1.1")
         self.runButton.setText("Run")
         self.label_2.setText("Confidence")
         self.label_5.setText("Video file")

@@ -57,9 +57,10 @@ class DetectionWindow(QtWidgets.QDialog):
         self.noButton.clicked.connect(self.closeWindow)
 
         self.setWindowTitle("Warning")
-        self.label.setText("Alerta")
-        self.label_2.setText("Por favor indique si en la siguiente imagen hay un arma")
-        self.yesButton.setText("SI")
+        self.label.setText("Alert")
+        self.label_2.setText("Please indicate if there is a weapon in the following image")
+
+        self.yesButton.setText("YES")
         self.noButton.setText("NO")
 
     def prompAlarm(self):
