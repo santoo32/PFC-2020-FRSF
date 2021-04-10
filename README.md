@@ -67,7 +67,7 @@ These steps may vary depending on OS and use/not use of Anaconda Environment.
 If you are using Anaconda to handle dependencies, steps 2 and 6 need to be run inside the Conda Virtual Environment.
 
 1. Clone the git repo
-2. Install requirements: `pip install -r ./docs/requirements.txt`
+2. Install requirements: `pip3 install -r ./docs/requirements.txt`
 3. Download model: https://drive.google.com/drive/folders/1VU51VJXfGMfdwdOFZov6TSXh-rRUmWbC
 4. Extract model.weights in /data/weights
 5. Rename model.weights to handgun.weights
