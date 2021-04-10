@@ -46,5 +46,29 @@ For the core of our aplication we used:
     </a>
 </p>
 
+## Requirements:
 
+#### Hardware:
+- CUDA compatible NVIDIA GPU (https://developer.nvidia.com/cuda-gpus)
 
+#### Software Dependencies:
+- <a href="https://www.python.org/downloads/">Python 3.5.x - 3.8.x</a>
+- <a href="https://developer.nvidia.com/cuda-10.1-download-archive-base">CUDA Toolkit 10.1</a>
+- <a href="https://developer.nvidia.com/rdp/cudnn-archive">cuDNN 7.6.5</a>
+- (Optional) <a href="https://www.anaconda.com/">Anaconda Environment 4.8.x</a> -- to handle Python environment and dependencies
+
+This project is done with Tensorflow 2.2.0. There are other possible depency configurations that **might** work, check:
+- Linux/macOS: https://www.tensorflow.org/install/source#gpu
+- Windows: https://www.tensorflow.org/install/source_windows#gpu
+
+## How to run:
+
+These steps may vary depending on OS and use/not use of Anaconda Environment.
+If you are using Anaconda to handle dependencies, steps 2 and 6 need to be run inside the Conda Virtual Environment.
+
+1. Clone the git repo
+2. Install requirements: `pip install -r ./docs/requirements.txt`
+3. Download model: https://drive.google.com/drive/folders/1VU51VJXfGMfdwdOFZov6TSXh-rRUmWbC
+4. Extract model.weights in /data/weights
+5. Rename model.weights to handgun.weights
+6. Run: `python MainWIndowAlpha.py`
