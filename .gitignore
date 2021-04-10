@@ -20,5 +20,7 @@ bin-release/
 *.ropeproject
 
 #Ignore videos and weights folders to make commits lighter
-4-Object_Detection/YOLOV3/data/videos
-4-Object_Detection/YOLOV3/data/weights
+data/weights
+
+#Ignore detections
+Alarm-*.png
